@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoMo Application Workflow</title>
+    <title>MTN MoMo App Mockup</title>
     <style>
         :root {
-            --mtn-yellow: #FFCC00;
-            --mtn-dark-blue: #004B6E;
-            --bg-grey: #F4F4F4;
-            --text-dark: #2C2C2C;
-            --muted-grey: #757575;
+            --momo-yellow: #FFCC00;
+            --momo-blue: #002244;
+            --momo-dark-blue: #0A192F;
+            --bg-light: #F4F6F9;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
         }
 
         * {
@@ -22,144 +23,166 @@
         }
 
         body {
-            background-color: #333;
+            background-color: #1a1a1a;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            color: var(--text-dark);
         }
 
-        /* Smartphone Frame Container */
-        .phone-container {
+        /* Phone Simulator Display container */
+        .phone-wrapper {
             width: 100%;
             max-width: 412px;
-            height: 892px;
-            background-color: var(--bg-grey);
+            height: 840px;
+            background-color: var(--bg-light);
+            border-radius: 40px;
+            border: 8px solid #2d2d2d;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-            border-radius: 36px;
-            border: 8px solid #222;
         }
 
-        /* App Bar Header */
-        .app-bar {
-            background-color: var(--mtn-yellow);
-            padding: 45px 20px 15px 20px;
+        /* Native App Header View Layout */
+        .app-header {
+            background-color: var(--momo-yellow);
+            padding: 35px 20px 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
             display: flex;
             align-items: center;
             gap: 16px;
         }
 
-        .back-btn {
-            cursor: pointer;
-            display: none;
+        .back-icon-btn {
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #000;
+            display: none;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        .header-right-menu {
+            font-size: 22px;
             font-weight: bold;
         }
 
-        .app-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: black;
-        }
-
-        .screen-content {
+        /* Dynamic View Screens Panels */
+        .view-panel {
             flex: 1;
             overflow-y: auto;
             display: none;
         }
 
-        .screen-content.active {
+        .view-panel.active {
             display: block;
         }
 
-        /* --- SCREEN 1: DASHBOARD --- */
-        .yellow-accent-bar {
-            height: 25px;
-            background-color: var(--mtn-yellow);
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
+        /* --- SCREEN 1: DASHBOARD LAYOUT STYLING --- */
+        .yellow-banner-accent {
+            background-color: var(--momo-yellow);
+            height: 20px;
+            border-radius: 0 0 24px 24px;
         }
 
-        .section-title {
-            padding: 20px 20px 5px 20px;
-            font-size: 16px;
-            color: var(--text-dark);
-            font-weight: 500;
+        .section-header {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 24px 20px 8px 20px;
         }
 
-        .divider {
-            margin: 0 20px 15px 20px;
+        .divider-line {
             border: none;
-            border-top: 1px solid #E0E0E0;
+            border-top: 1px solid #E2E8F0;
+            margin: 0 20px 16px 20px;
         }
 
-        .balance-card {
-            background: white;
+        .balance-container-card {
+            background-color: white;
             margin: 0 16px;
             padding: 20px;
-            border-radius: 16px;
-            border: 2.5px solid var(--mtn-dark-blue);
+            border-radius: 18px;
+            border: 2px solid var(--momo-blue);
             display: flex;
             align-items: center;
             gap: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
         }
 
-        .balance-icon {
-            width: 50px;
-            height: 50px;
-            background-color: var(--mtn-dark-blue);
-            border-radius: 10px;
+        .wallet-square-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--momo-blue);
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--mtn-yellow);
-            font-size: 24px;
+            color: var(--momo-yellow);
+            font-size: 22px;
         }
 
-        .balance-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
+        .balance-details {
+            flex: 1;
         }
 
-        .balance-label {
-            color: var(--muted-grey);
-            font-size: 12px;
+        .balance-details h4 {
+            font-size: 13px;
+            color: var(--text-muted);
             font-weight: 500;
+            margin-bottom: 2px;
         }
 
-        .balance-amount-row {
+        .amount-row-block {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .balance-amount {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-dark);
+        .amount-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: #000;
         }
 
-        .balance-timestamp {
-            color: var(--muted-grey);
+        .eye-toggle-btn {
+            color: var(--text-muted);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .login-timestamp {
             font-size: 10px;
+            color: var(--text-muted);
             margin-top: 4px;
         }
 
-        .services-grid {
+        /* Services Grid Architecture */
+        .services-action-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px 12px;
+            gap: 24px 12px;
             padding: 16px;
         }
 
-        .grid-item {
+        .service-node {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -167,251 +190,265 @@
             cursor: pointer;
         }
 
-        .grid-circle {
+        .service-circle-wrapper {
             width: 64px;
             height: 64px;
-            background-color: var(--mtn-dark-blue);
+            background-color: var(--momo-blue);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 26px;
+            font-size: 24px;
             margin-bottom: 8px;
+            transition: transform 0.2s;
         }
 
-        .grid-label {
+        .service-node:hover .service-circle-wrapper {
+            transform: scale(1.05);
+        }
+
+        .service-label {
             font-size: 12px;
-            color: var(--text-dark);
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--momo-blue);
         }
 
-        .promo-banner {
-            margin: 0 16px 24px 16px;
-            height: 130px;
+        /* Banner Graphics element */
+        .marketing-promo-banner {
+            margin: 16px;
+            height: 120px;
             border-radius: 16px;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=500') center/cover;
+            background: linear-gradient(rgba(0,34,68,0.45), rgba(0,34,68,0.45)), url('https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=500') center/cover;
             display: flex;
             align-items: flex-end;
             padding: 16px;
         }
 
-        .promo-text {
+        .marketing-promo-banner p {
             color: white;
-            font-weight: bold;
-            font-size: 18px;
-            line-height: 1.2;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1.3;
         }
 
-        /* --- SCREEN 2: SEND MOMO FORM --- */
-        .form-container {
-            padding: 20px;
+        /* --- SCREEN 2: INPUT FORM DATA ENTRY VIEW --- */
+        .form-scaffold {
+            padding: 24px 20px;
             display: flex;
             flex-direction: column;
             height: 100%;
         }
 
-        .form-instruction {
+        .scaffold-instruction {
             font-size: 15px;
-            color: var(--text-dark);
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--momo-blue);
             margin-bottom: 12px;
         }
 
-        .input-label {
-            color: var(--muted-grey);
-            font-size: 13px;
-            margin-bottom: 8px;
-            margin-top: 16px;
+        .scaffold-divider {
+            border: none;
+            border-top: 1px solid #E2E8F0;
+            margin-bottom: 20px;
         }
 
-        .network-selector {
-            background-color: #424242;
+        .network-pill-card {
+            background-color: #334155;
             padding: 14px 16px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             gap: 12px;
             color: white;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 24px;
         }
 
-        .network-dot {
-            width: 16px;
-            height: 16px;
-            background-color: var(--mtn-yellow);
+        .indicator-dot {
+            width: 14px;
+            height: 14px;
+            background-color: var(--momo-yellow);
             border-radius: 50%;
         }
 
-        .form-input {
+        .native-input-box {
             width: 100%;
-            background-color: #EFEFEF;
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 8px;
+            background-color: #E2E8F0;
+            border: 1px solid transparent;
+            border-radius: 10px;
             padding: 16px;
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
+            color: #000;
             outline: none;
-            margin-top: 12px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
         }
 
-        .form-input:focus {
-            border-color: var(--mtn-dark-blue);
+        .native-input-box::placeholder {
+            color: #94A3B8;
         }
 
-        .submit-btn {
+        .native-input-box:focus {
+            border-color: var(--momo-blue);
+            background-color: #F1F5F9;
+        }
+
+        .cta-action-btn {
             width: 100%;
-            background-color: var(--mtn-yellow);
+            background-color: var(--momo-yellow);
             border: none;
-            height: 56px;
-            border-radius: 28px;
-            font-weight: bold;
+            height: 54px;
+            border-radius: 27px;
+            font-weight: 800;
             font-size: 16px;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             cursor: pointer;
             margin-top: auto;
-            margin-bottom: 20px;
+            color: #000;
         }
 
-        /* --- SCREEN 3: POPUP MODAL SHEET --- */
-        .modal-overlay {
+        /* --- SCREEN 3: FIXED MODAL TRANSACTIONS DIALOG POPUP --- */
+        .popup-modal-backdrop {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.6);
             display: none;
             justify-content: flex-end;
             flex-direction: column;
             z-index: 100;
         }
 
-        .modal-overlay.active {
+        .popup-modal-backdrop.visible {
             display: flex;
         }
 
-        .modal-sheet {
+        .popup-bottom-sheet {
             background-color: white;
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
-            height: 85%;
+            border-top-left-radius: 32px;
+            border-top-right-radius: 32px;
+            height: 80%;
             padding: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             transform: translateY(100%);
-            transition: transform 0.3s ease-out;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .modal-overlay.active .modal-sheet {
+        .popup-modal-backdrop.visible .popup-bottom-sheet {
             transform: translateY(0);
         }
 
-        /* Custom Mascot Graphics Layout */
-        .mascot-container {
+        /* Mascot Art Graphic Elements Layout Mapping */
+        .mascot-graphic-hub {
             position: relative;
-            width: 140px;
-            height: 140px;
-            margin-bottom: 40px;
+            width: 130px;
+            height: 130px;
+            margin-top: 40px;
         }
 
-        .mascot-head {
-            width: 140px;
-            height: 140px;
-            background-color: var(--mtn-yellow);
+        .mascot-yellow-circle {
+            width: 130px;
+            height: 130px;
+            background-color: var(--momo-yellow);
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 2;
             position: relative;
+            z-index: 5;
         }
 
-        .mascot-eyes {
+        .mascot-eyes-pair {
             display: flex;
-            gap: 16px;
-            margin-bottom: 8px;
+            gap: 14px;
+            margin-bottom: 6px;
         }
 
-        .mascot-eye {
-            width: 24px;
-            height: 12px;
-            background-color: var(--mtn-dark-blue);
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+        .mascot-eye-arc {
+            width: 22px;
+            height: 11px;
+            background-color: var(--momo-blue);
+            border-top-left-radius: 11px;
+            border-top-right-radius: 11px;
         }
 
-        .mascot-smile {
-            width: 20px;
-            height: 10px;
-            background-color: var(--mtn-dark-blue);
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
+        .mascot-smile-lip {
+            width: 18px;
+            height: 9px;
+            background-color: var(--momo-blue);
+            border-bottom-left-radius: 9px;
+            border-bottom-right-radius: 9px;
         }
 
-        .burst-petal {
+        .burst-accent-petal {
             position: absolute;
-            width: 12px;
-            height: 28px;
-            border-radius: 12px;
-            top: calc(50% - 14px);
-            left: calc(50% - 6px);
+            width: 10px;
+            height: 26px;
+            border-radius: 10px;
+            top: calc(50% - 13px);
+            left: calc(50% - 5px);
+            z-index: 2;
         }
 
-        /* Burst Placements mapping out mathematically around the circle */
-        .p1 { transform: rotate(0deg) translateY(-95px); background-color: teal; }
-        .p2 { transform: rotate(60deg) translateY(-95px); background-color: deeporange; }
-        .p3 { transform: rotate(120deg) translateY(-95px); background-color: purple; }
-        .p4 { transform: rotate(180deg) translateY(-95px); background-color: pink; }
-        .p5 { transform: rotate(240deg) translateY(-95px); background-color: green; }
-        .p6 { transform: rotate(300deg) translateY(-95px); background-color: dodgerblue; }
+        /* Absolute Positions of burst shapes encircling head center */
+        .petal-1 { transform: rotate(0deg) translateY(-85px); background-color: #008080; }
+        .petal-2 { transform: rotate(60deg) translateY(-85px); background-color: #FF5722; }
+        .petal-3 { transform: rotate(120deg) translateY(-85px); background-color: #8E44AD; }
+        .petal-4 { transform: rotate(180deg) translateY(-85px); background-color: #E91E63; }
+        .petal-5 { transform: rotate(240deg) translateY(-85px); background-color: #2ECC71; }
+        .petal-6 { transform: rotate(300deg) translateY(-85px); background-color: #2980B9; }
 
-        .success-title {
+        .modal-headline {
             font-size: 26px;
-            font-weight: bold;
-            color: var(--text-dark);
-            margin-bottom: 16px;
+            font-weight: 800;
+            color: #000;
+            text-align: center;
+            margin-top: 16px;
         }
 
-        .success-message {
+        .modal-body-caption {
             font-size: 15px;
             color: var(--text-dark);
-            opacity: 0.8;
             text-align: center;
-            line-height: 1.5;
-            margin-bottom: 40px;
+            line-height: 1.6;
+            font-weight: 500;
+            margin: 0 10px 30px 10px;
         }
 
-        /* Bottom Fixed Navigation Menu Bar Layout */
-        .bottom-nav {
+        /* Bottom Menu Control Navigation Deck */
+        .system-footer-deck {
             height: 65px;
             background-color: white;
-            border-top: 1px solid #E0E0E0;
+            border-top: 1px solid #E2E8F0;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             align-items: center;
-            text-align: center;
         }
 
-        .nav-item {
+        .footer-tab {
             display: flex;
             flex-direction: column;
             align-items: center;
             font-size: 11px;
-            color: var(--muted-grey);
-            font-weight: 500;
+            font-weight: 700;
+            color: #94A3B8;
             cursor: pointer;
         }
 
-        .nav-item.active {
-            color: var(--mtn-yellow);
-            font-weight: bold;
+        .footer-tab.active {
+            color: var(--momo-yellow);
         }
 
-        .nav-icon {
+        .tab-icon-symbol {
             font-size: 20px;
             margin-bottom: 2px;
         }
@@ -419,118 +456,123 @@
 </head>
 <body>
 
-<div class="phone-container">
-    <header class="app-bar">
-        <button class="back-btn" id="backBtn" onclick="navigateToDashboard()">←</button>
-        <span class="app-title" id="appTitle">MoMo</span>
+<div class="phone-wrapper">
+    <header class="app-header">
+        <div class="header-left">
+            <button class="back-icon-btn" id="backNavigationIconBtn" onclick="switchToDashboardScreen()">✕</button>
+            <span class="header-title" id="dynamicTitleNode">MoMo</span>
+        </div>
+        <div class="header-right-menu">☰</div>
     </header>
 
-    <main class="screen-content active" id="dashboardScreen">
-        <div class="yellow-accent-bar"></div>
-        <h2 class="section-title">Balance</h2>
-        <hr class="divider">
+    <main class="view-panel active" id="dashboardPanelContainer">
+        <div class="yellow-banner-accent"></div>
         
-        <div class="balance-card">
-            <div class="balance-icon">💳</div>
-            <div class="balance-info">
-                <span class="balance-label">MoMo Balance</span>
-                <div class="balance-amount-row">
-                    <span class="balance-amount">GHS 38905.74</span>
-                    <span style="color: var(--muted-grey); cursor: pointer;">👁️</span>
+        <h3 class="section-header">Balance</h3>
+        <hr class="divider-line">
+        
+        <div class="balance-container-card">
+            <div class="wallet-square-icon">💼</div>
+            <div class="balance-details">
+                <h4>MoMo Balance</h4>
+                <div class="amount-row-block">
+                    <span class="amount-text">GHS 38,905.74</span>
+                    <span class="eye-toggle-btn">👁️</span>
                 </div>
-                <span class="balance-timestamp">Last login: 5/17/2026 at 2:05:59 AM</span>
+                <div class="login-timestamp">Last login: 5/18/2026 at 10:10:42 PM</div>
             </div>
         </div>
 
-        <h2 class="section-title" style="font-size: 18px; font-weight: 600; margin-top: 10px;">Services</h2>
-        <div class="services-grid">
-            <div class="grid-item" onclick="navigateToForm()">
-                <div class="grid-circle">👤</div>
-                <span class="grid-label">Send MoMo</span>
+        <h3 class="section-header">Services</h3>
+        <div class="services-action-grid">
+            <div class="service-node" onclick="switchToFormScreen()">
+                <div class="service-circle-wrapper">👤</div>
+                <span class="service-label">Send MoMo</span>
             </div>
-            <div class="grid-item">
-                <div class="grid-circle">📄</div>
-                <span class="grid-label">Statement</span>
+            <div class="service-node">
+                <div class="service-circle-wrapper">📄</div>
+                <span class="service-label">Statement</span>
             </div>
-            <div class="grid-item">
-                <div class="grid-circle">📤</div>
-                <span class="grid-label">Cashout</span>
+            <div class="service-node">
+                <div class="service-circle-wrapper">📤</div>
+                <span class="service-label">Cashout</span>
             </div>
-            <div class="grid-item">
-                <div class="grid-circle">📝</div>
-                <span class="grid-label">Approvals</span>
+            <div class="service-node">
+                <div class="service-circle-wrapper">📋</div>
+                <span class="service-label">Approvals</span>
             </div>
-            <div class="grid-item">
-                <div class="grid-circle">🔲</div>
-                <span class="grid-label">MoMo Pay</span>
+            <div class="service-node">
+                <div class="service-circle-wrapper">🔳</div>
+                <span class="service-label">MoMo Pay</span>
             </div>
-            <div class="grid-item">
-                <div class="grid-circle">🛡️</div>
-                <span class="grid-label">Bank Services</span>
+            <div class="service-node">
+                <div class="service-circle-wrapper">🛡️</div>
+                <span class="service-label">Bank Services</span>
             </div>
         </div>
 
-        <h2 class="section-title">Get Broadband</h2>
-        <div class="promo-banner">
-            <div class="promo-text">Get fibre broadband<br>for your home!</div>
+        <h3 class="section-header">Get Broadband</h3>
+        <div class="marketing-promo-banner">
+            <p>Get fibre broadband<br>for your home!</p>
         </div>
     </main>
 
-    <main class="screen-content" id="formScreen">
-        <div class="form-container">
-            <div class="form-instruction">Sending MoMo to MoMo wallets</div>
-            <hr style="border: none; border-top: 1px solid #DDD; margin-bottom: 16px;">
+    <main class="view-panel" id="formPanelContainer">
+        <div class="form-scaffold">
+            <div class="scaffold-instruction">Sending MoMo to MoMo wallets</div>
+            <hr class="scaffold-divider">
             
-            <div class="input-label">Select Network</div>
-            <div class="network-selector">
-                <div class="network-dot"></div>
+            <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">Select Network</div>
+            <div class="network-pill-card">
+                <div class="indicator-dot"></div>
                 <span>MTN</span>
             </div>
 
-            <input type="tel" class="form-input" id="phoneInput" placeholder="Enter Number...">
-            <input type="number" class="form-input" id="amountInput" placeholder="Enter Amount">
-            <input type="text" class="form-input" id="referenceInput" placeholder="Enter reference">
+            <input type="tel" class="native-input-box" id="walletNumberField" placeholder="Enter Number...">
+            <input type="number" class="native-input-box" id="walletAmountField" placeholder="Enter Amount">
+            <input type="text" class="native-input-box" id="walletReferenceField" placeholder="Enter reference">
 
-            <button class="submit-btn" onclick="processPaymentSubmit()">NEXT</button>
+            <button class="cta-action-btn" onclick="executeFormValidationPipeline()">NEXT</button>
         </div>
     </main>
 
-    <nav class="bottom-nav">
-        <div class="nav-item"><span class="nav-icon">🏠</span>Home</div>
-        <div class="nav-item"><span class="nav-icon">🛒</span>Shop</div>
-        <div class="nav-item active"><span class="nav-icon">🟡</span>MoMo</div>
-        <div class="nav-item"><span class="nav-icon">⋮</span>More</div>
-    </nav>
+    <footer class="system-footer-deck">
+        <div class="footer-tab"><span class="tab-icon-symbol">🏠</span>Home</div>
+        <div class="footer-tab"><span class="tab-icon-symbol">🛒</span>Shop</div>
+        <div class="footer-tab active"><span class="tab-icon-symbol">🔘</span>MoMo</div>
+        <div class="footer-tab"><span class="tab-icon-symbol">⚙️</span>More</div>
+    </footer>
 
-    <div class="modal-overlay" id="successModal">
-        <div class="modal-sheet">
-            <div class="mascot-container">
-                <div class="burst-petal p1"></div>
-                <div class="burst-petal p2"></div>
-                <div class="burst-petal p3"></div>
-                <div class="burst-petal p4"></div>
-                <div class="burst-petal p5"></div>
-                <div class="burst-petal p6"></div>
-                <div class="mascot-head">
-                    <div class="mascot-eyes">
-                        <div class="mascot-eye"></div>
-                        <div class="mascot-eye"></div>
+    <div class="popup-modal-backdrop" id="transactionOverlayBackdrop">
+        <div class="popup-bottom-sheet">
+            
+            <div class="mascot-graphic-hub">
+                <div class="burst-accent-petal petal-1"></div>
+                <div class="burst-accent-petal petal-2"></div>
+                <div class="burst-accent-petal petal-3"></div>
+                <div class="burst-accent-petal petal-4"></div>
+                <div class="burst-accent-petal petal-5"></div>
+                <div class="burst-accent-petal petal-6"></div>
+                <div class="mascot-yellow-circle">
+                    <div class="mascot-eyes-pair">
+                        <div class="mascot-eye-arc"></div>
+                        <div class="mascot-eye-arc"></div>
                     </div>
-                    <div class="mascot-smile"></div>
+                    <div class="mascot-smile-lip"></div>
                 </div>
             </div>
+
+            <h1 class="modal-headline">Transfer Complete</h1>
+            <p class="modal-body-caption" id="dynamicMessagePlacementArea">You have transferred GHS 0 to<br>recipient wallet</p>
             
-            <h1 class="success-title">Transfer Complete</h1>
-            <p class="success-message" id="successMessageBlock">You have transferred GHS 101 to<br>PETER NSIAH's wallet</p>
-            
-            <button class="submit-btn" style="margin-top: auto;" onclick="closeModalAndReset()">DONE</button>
+            <button class="cta-action-btn" onclick="dismissOverlayAndFlushForm()">DONE</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Database array elements used for name randomization mechanics
-    const ghanaianNames = [
+    // List of dynamic Ghanaian Names for random assignment
+    const ghanaianRecipientsDb = [
         "PETER NSIAH",
         "KWAME MENSAH",
         "AMA SERWAA",
@@ -541,51 +583,51 @@
         "AKOSUA ADOFO"
     ];
 
-    // Navigation View Screen Swappers
-    function navigateToForm() {
-        document.getElementById('dashboardScreen').classList.remove('active');
-        document.getElementById('formScreen').classList.add('active');
-        document.getElementById('backBtn').style.display = 'block';
-        document.getElementById('appTitle').innerText = 'Send MoMo';
+    // Screen Routing Controllers
+    function switchToFormScreen() {
+        document.getElementById('dashboardPanelContainer').classList.remove('active');
+        document.getElementById('formPanelContainer').classList.add('active');
+        document.getElementById('backNavigationIconBtn').style.display = 'block';
+        document.getElementById('dynamicTitleNode').innerText = 'Send MoMo';
     }
 
-    function navigateToDashboard() {
-        document.getElementById('formScreen').classList.remove('active');
-        document.getElementById('dashboardScreen').classList.add('active');
-        document.getElementById('backBtn').style.display = 'none';
-        document.getElementById('appTitle').innerText = 'MoMo';
+    function switchToDashboardScreen() {
+        document.getElementById('formPanelContainer').classList.remove('active');
+        document.getElementById('dashboardPanelContainer').classList.add('active');
+        document.getElementById('backNavigationIconBtn').style.display = 'none';
+        document.getElementById('dynamicTitleNode').innerText = 'MoMo';
     }
 
-    // Modal Trigger Logic
-    function processPaymentSubmit() {
-        const amountValue = document.getElementById('amountInput').value.trim();
-        
-        if (!amountValue) {
-            alert("Please input a valid transfer payment amount criteria value parameter.");
+    // Processing Form Submission Pipeline
+    function executeFormValidationPipeline() {
+        const inputAmount = document.getElementById('walletAmountField').value.trim();
+
+        if (!inputAmount || parseFloat(inputAmount) <= 0) {
+            alert("Please enter a valid amount to proceed.");
             return;
         }
 
-        // Fetch random recipient array element selection indexes
-        const randomName = ghanaianNames[Math.floor(Math.random() * ghanaianNames.length)];
-        
-        // Contextually update output popup display node references strings
-        document.getElementById('successMessageBlock').innerHTML = `You have transferred GHS ${amountValue} to<br>${randomName}'s wallet`;
-        
-        // Display Modal Sheet UI Components
-        document.getElementById('successModal').classList.add('active');
+        // Randomize the recipient name
+        const dynamicRecipient = ghanaianRecipientsDb[Math.floor(Math.random() * ghanaianRecipientsDb.length)];
+
+        // Update the layout context precisely matching the UI layout screen state
+        document.getElementById('dynamicMessagePlacementArea').innerHTML = `You have transferred GHS ${inputAmount} to<br><strong>${dynamicRecipient}</strong>'s wallet`;
+
+        // Render the modal popup view layer target elements
+        document.getElementById('transactionOverlayBackdrop').classList.add('visible');
     }
 
-    function closeModalAndReset() {
-        // Dismiss Modal Window View Layer Overlay Element Objects
-        document.getElementById('successModal').classList.remove('active');
-        
-        // Flush Input Value Data
-        document.getElementById('phoneInput').value = '';
-        document.getElementById('amountInput').value = '';
-        document.getElementById('referenceInput').value = '';
-        
-        // Auto Return Home Routine
-        navigateToDashboard();
+    function dismissOverlayAndFlushForm() {
+        // Hide popup layout elements
+        document.getElementById('transactionOverlayBackdrop').classList.remove('visible');
+
+        // Flush form field data elements parameters values
+        document.getElementById('walletNumberField').value = '';
+        document.getElementById('walletAmountField').value = '';
+        document.getElementById('walletReferenceField').value = '';
+
+        // Safely redirect execution paths back to screen index zero dashboard home layout view
+        switchToDashboardScreen();
     }
 </script>
 
