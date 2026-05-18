@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoMo Application Workflow</title>
+    <style>
+        :root {
+            --mtn-yellow: #FFCC00;
+            --mtn-dark-blue: #004B6E;
+            --bg-grey: #F4F4F4;
+            --text-dark: #2C2C2C;
+            --muted-grey: #757575;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Smartphone Frame Container */
+        .phone-container {
+            width: 100%;
+            max-width: 412px;
+            height: 892px;
+            background-color: var(--bg-grey);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+            border-radius: 36px;
+            border: 8px solid #222;
+        }
+
+        /* App Bar Header */
+        .app-bar {
+            background-color: var(--mtn-yellow);
+            padding: 45px 20px 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            cursor: pointer;
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .app-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: black;
+        }
+
+        .screen-content {
+            flex: 1;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .screen-content.active {
+            display: block;
+        }
+
+        /* --- SCREEN 1: DASHBOARD --- */
+        .yellow-accent-bar {
+            height: 25px;
+            background-color: var(--mtn-yellow);
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .section-title {
+            padding: 20px 20px 5px 20px;
+            font-size: 16px;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .divider {
+            margin: 0 20px 15px 20px;
+            border: none;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .balance-card {
+            background: white;
+            margin: 0 16px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2.5px solid var(--mtn-dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .balance-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--mtn-dark-blue);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--mtn-yellow);
+            font-size: 24px;
+        }
+
+        .balance-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .balance-label {
+            color: var(--muted-grey);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .balance-amount-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .balance-amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .balance-timestamp {
+            color: var(--muted-grey);
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 12px;
+            padding: 16px;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .grid-circle {
+            width: 64px;
+            height: 64px;
+            background-color: var(--mtn-dark-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .grid-label {
+            font-size: 12px;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .promo-banner {
+            margin: 0 16px 24px 16px;
+            height: 130px;
+            border-radius: 16px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=500') center/cover;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+        }
+
+        .promo-text {
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1.2;
+        }
+
+        /* --- SCREEN 2: SEND MOMO FORM --- */
+        .form-container {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .form-instruction {
+            font-size: 15px;
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .input-label {
+            color: var(--muted-grey);
+            font-size: 13px;
+            margin-bottom: 8px;
+            margin-top: 16px;
+        }
+
+        .network-selector {
+            background-color: #424242;
+            padding: 14px 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .network-dot {
+            width: 16px;
+            height: 16px;
+            background-color: var(--mtn-yellow);
+            border-radius: 50%;
+        }
+
+        .form-input {
+            width: 100%;
+            background-color: #EFEFEF;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            outline: none;
+            margin-top: 12px;
+        }
+
+        .form-input:focus {
+            border-color: var(--mtn-dark-blue);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--mtn-yellow);
+            border: none;
+            height: 56px;
+            border-radius: 28px;
+            font-weight: bold;
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        /* --- SCREEN 3: POPUP MODAL SHEET --- */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: flex-end;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-sheet {
+            background-color: white;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            height: 85%;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .modal-overlay.active .modal-sheet {
+            transform: translateY(0);
+        }
+
+        /* Custom Mascot Graphics Layout */
+        .mascot-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 40px;
+        }
+
+        .mascot-head {
+            width: 140px;
+            height: 140px;
+            background-color: var(--mtn-yellow);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .mascot-eyes {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        .mascot-eye {
+            width: 24px;
+            height: 12px;
+            background-color: var(--mtn-dark-blue);
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .mascot-smile {
+            width: 20px;
+            height: 10px;
+            background-color: var(--mtn-dark-blue);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .burst-petal {
+            position: absolute;
+            width: 12px;
+            height: 28px;
+            border-radius: 12px;
+            top: calc(50% - 14px);
+            left: calc(50% - 6px);
+        }
+
+        /* Burst Placements mapping out mathematically around the circle */
+        .p1 { transform: rotate(0deg) translateY(-95px); background-color: teal; }
+        .p2 { transform: rotate(60deg) translateY(-95px); background-color: deeporange; }
+        .p3 { transform: rotate(120deg) translateY(-95px); background-color: purple; }
+        .p4 { transform: rotate(180deg) translateY(-95px); background-color: pink; }
+        .p5 { transform: rotate(240deg) translateY(-95px); background-color: green; }
+        .p6 { transform: rotate(300deg) translateY(-95px); background-color: dodgerblue; }
+
+        .success-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .success-message {
+            font-size: 15px;
+            color: var(--text-dark);
+            opacity: 0.8;
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        /* Bottom Fixed Navigation Menu Bar Layout */
+        .bottom-nav {
+            height: 65px;
+            background-color: white;
+            border-top: 1px solid #E0E0E0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: center;
+            text-align: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            color: var(--muted-grey);
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--mtn-yellow);
+            font-weight: bold;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone-container">
+    <header class="app-bar">
+        <button class="back-btn" id="backBtn" onclick="navigateToDashboard()">←</button>
+        <span class="app-title" id="appTitle">MoMo</span>
+    </header>
+
+    <main class="screen-content active" id="dashboardScreen">
+        <div class="yellow-accent-bar"></div>
+        <h2 class="section-title">Balance</h2>
+        <hr class="divider">
+        
+        <div class="balance-card">
+            <div class="balance-icon">💳</div>
+            <div class="balance-info">
+                <span class="balance-label">MoMo Balance</span>
+                <div class="balance-amount-row">
+                    <span class="balance-amount">GHS 38905.74</span>
+                    <span style="color: var(--muted-grey); cursor: pointer;">👁️</span>
+                </div>
+                <span class="balance-timestamp">Last login: 5/17/2026 at 2:05:59 AM</span>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="font-size: 18px; font-weight: 600; margin-top: 10px;">Services</h2>
+        <div class="services-grid">
+            <div class="grid-item" onclick="navigateToForm()">
+                <div class="grid-circle">👤</div>
+                <span class="grid-label">Send MoMo</span>
+            </div>
+            <div class="grid-item">
+                <div class="grid-circle">📄</div>
+                <span class="grid-label">Statement</span>
+            </div>
+            <div class="grid-item">
+                <div class="grid-circle">📤</div>
+                <span class="grid-label">Cashout</span>
+            </div>
+            <div class="grid-item">
+                <div class="grid-circle">📝</div>
+                <span class="grid-label">Approvals</span>
+            </div>
+            <div class="grid-item">
+                <div class="grid-circle">🔲</div>
+                <span class="grid-label">MoMo Pay</span>
+            </div>
+            <div class="grid-item">
+                <div class="grid-circle">🛡️</div>
+                <span class="grid-label">Bank Services</span>
+            </div>
+        </div>
+
+        <h2 class="section-title">Get Broadband</h2>
+        <div class="promo-banner">
+            <div class="promo-text">Get fibre broadband<br>for your home!</div>
+        </div>
+    </main>
+
+    <main class="screen-content" id="formScreen">
+        <div class="form-container">
+            <div class="form-instruction">Sending MoMo to MoMo wallets</div>
+            <hr style="border: none; border-top: 1px solid #DDD; margin-bottom: 16px;">
+            
+            <div class="input-label">Select Network</div>
+            <div class="network-selector">
+                <div class="network-dot"></div>
+                <span>MTN</span>
+            </div>
+
+            <input type="tel" class="form-input" id="phoneInput" placeholder="Enter Number...">
+            <input type="number" class="form-input" id="amountInput" placeholder="Enter Amount">
+            <input type="text" class="form-input" id="referenceInput" placeholder="Enter reference">
+
+            <button class="submit-btn" onclick="processPaymentSubmit()">NEXT</button>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <div class="nav-item"><span class="nav-icon">🏠</span>Home</div>
+        <div class="nav-item"><span class="nav-icon">🛒</span>Shop</div>
+        <div class="nav-item active"><span class="nav-icon">🟡</span>MoMo</div>
+        <div class="nav-item"><span class="nav-icon">⋮</span>More</div>
+    </nav>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-sheet">
+            <div class="mascot-container">
+                <div class="burst-petal p1"></div>
+                <div class="burst-petal p2"></div>
+                <div class="burst-petal p3"></div>
+                <div class="burst-petal p4"></div>
+                <div class="burst-petal p5"></div>
+                <div class="burst-petal p6"></div>
+                <div class="mascot-head">
+                    <div class="mascot-eyes">
+                        <div class="mascot-eye"></div>
+                        <div class="mascot-eye"></div>
+                    </div>
+                    <div class="mascot-smile"></div>
+                </div>
+            </div>
+            
+            <h1 class="success-title">Transfer Complete</h1>
+            <p class="success-message" id="successMessageBlock">You have transferred GHS 101 to<br>PETER NSIAH's wallet</p>
+            
+            <button class="submit-btn" style="margin-top: auto;" onclick="closeModalAndReset()">DONE</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Database array elements used for name randomization mechanics
+    const ghanaianNames = [
+        "PETER NSIAH",
+        "KWAME MENSAH",
+        "AMA SERWAA",
+        "ABENA OSEI",
+        "KOFI BOATENG",
+        "YAA ASANTEWAA",
+        "EMMANUEL OPOKU",
+        "AKOSUA ADOFO"
+    ];
+
+    // Navigation View Screen Swappers
+    function navigateToForm() {
+        document.getElementById('dashboardScreen').classList.remove('active');
+        document.getElementById('formScreen').classList.add('active');
+        document.getElementById('backBtn').style.display = 'block';
+        document.getElementById('appTitle').innerText = 'Send MoMo';
+    }
+
+    function navigateToDashboard() {
+        document.getElementById('formScreen').classList.remove('active');
+        document.getElementById('dashboardScreen').classList.add('active');
+        document.getElementById('backBtn').style.display = 'none';
+        document.getElementById('appTitle').innerText = 'MoMo';
+    }
+
+    // Modal Trigger Logic
+    function processPaymentSubmit() {
+        const amountValue = document.getElementById('amountInput').value.trim();
+        
+        if (!amountValue) {
+            alert("Please input a valid transfer payment amount criteria value parameter.");
+            return;
+        }
+
+        // Fetch random recipient array element selection indexes
+        const randomName = ghanaianNames[Math.floor(Math.random() * ghanaianNames.length)];
+        
+        // Contextually update output popup display node references strings
+        document.getElementById('successMessageBlock').innerHTML = `You have transferred GHS ${amountValue} to<br>${randomName}'s wallet`;
+        
+        // Display Modal Sheet UI Components
+        document.getElementById('successModal').classList.add('active');
+    }
+
+    function closeModalAndReset() {
+        // Dismiss Modal Window View Layer Overlay Element Objects
+        document.getElementById('successModal').classList.remove('active');
+        
+        // Flush Input Value Data
+        document.getElementById('phoneInput').value = '';
+        document.getElementById('amountInput').value = '';
+        document.getElementById('referenceInput').value = '';
+        
+        // Auto Return Home Routine
+        navigateToDashboard();
+    }
+</script>
+
+</body>
+</html>
